@@ -5,30 +5,30 @@ var CreateIDError = require('./CreateIDError');
 
 class IncrementCounter {
   constructor() {
-    this.incrementCount = 0;
-    this.lastTimestamp = 0;
+    this._incrementCount = 0;
+    this._lastTimestamp = 0;
   }
 
   inc() {
     var stamp = Math.ceil(new Date().getTime() / 1000); //msec -> sec
-    if (stamp < this.lastTimestamp) {
+    if (stamp < this._lastTimestamp) {
       // 마지막 갱신 시간보다 현재 시간이 작으면 명백한 오류
       throw new CreateIDError(CreateIDError.TIMESTAMP_IS_BAKWORD);
     } 
-    if (stamp !== this.lastTimestamp) {
-      this.incrementCount = 0;
+    if (stamp !== this._lastTimestamp) {
+      this._incrementCount = 0;
     }
-    this.incrementCount++;
-    this.lastTimestamp = stamp;
-    return this.incrementCount;
+    this._incrementCount++;
+    this._lastTimestamp = stamp;
+    return this._incrementCount;
   }
   
   getIncrementCount() {
-    return this.incrementCount;
+    return this._incrementCount;
   }
   
   getLastTimestamp() {
-    return this.lastTimestamp;
+    return this._lastTimestamp;
   }
 }
 
